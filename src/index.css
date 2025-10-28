@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+.hero-bg {
+  background-image: linear-gradient(to right, #ffe6fd, #e0f8f5),
+    url('../src/assets/bg-hero-left.png'), url('/assets/bg-hero-right.png');
+  background-position: center left, center right;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.gradient-bg {
+  background: linear-gradient(to right, #632ee3, #9f62f2);
+}
+a.active {
+  font-weight: bold;
+}
+a.active,
+.gradient-text {
+  background: linear-gradient(to right, #632ee3, #9f62f2);
+  color: transparent;
+  background-clip: text;
+}

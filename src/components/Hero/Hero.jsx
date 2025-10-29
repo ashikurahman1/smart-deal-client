@@ -4,7 +4,7 @@ const Hero = () => {
   return (
     <div className="py-20 px-4 hero-bg">
       <div className="max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
-        <h1 className="font-bold text-7xl mb-5 leading-tight">
+        <h1 className="font-bold text-5xl lg:text-7xl mb-5 leading-tight">
           Deal your <span className="gradient-text">Products</span> in a{' '}
           <span className="gradient-text">Smart</span> way !
         </h1>

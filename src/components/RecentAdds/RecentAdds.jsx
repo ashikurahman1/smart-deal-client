@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from '../Container/Container';
 import Card from '../Card/Card';
+import { Link } from 'react-router';
 
 const RecentAdds = () => {
   return (
@@ -20,9 +21,12 @@ const RecentAdds = () => {
           <Card />
         </div>
         <div className="flex justify-center my-8">
-          <button className="gradient-bg p-4 px-12   font-semibold text-base-100 rounded-md cursor-pointer ">
+          <Link
+            to="/all-ads"
+            className="gradient-bg p-4 px-12   font-semibold text-base-100 rounded-md cursor-pointer "
+          >
             Show All
-          </button>
+          </Link>
         </div>
       </Container>
     </div>

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '../Container/Container';
 import { Link, NavLink } from 'react-router';
 import avater from '../../assets/thumb-profile.png';
 
 const Navbar = () => {
+  const [user, setUser] = useState(false);
+
   const navLinks = [
     {
       name: 'Home',
@@ -36,7 +38,7 @@ const Navbar = () => {
               Smart<span className="gradient-text">Deals</span>
             </Link>
           </div>
-          <div className="flex gap-10">
+          <div className="flex gap-10 hidden lg:flex">
             {navLinks.map((link, index) => (
               <NavLink to={link.path} className="font-semibold" key={index}>
                 {link.name}
@@ -44,7 +46,28 @@ const Navbar = () => {
             ))}
           </div>
           <div>
-            <img src={avater} alt="Profile img" />
+            {user ? (
+              <img src={avater} alt="Profile img" />
+            ) : (
+              <div className="flex items-center">
+                <div>
+                  <Link
+                    to="/auth/login"
+                    className="border-2 border-purple-600 gradient-text px-4 py-[6px] rounded-md font-semibold"
+                  >
+                    Login
+                  </Link>
+                </div>
+                <div className="ml-5 hidden lg:flex">
+                  <Link
+                    to="/auth/register"
+                    className="gradient-bg px-4 py-2 rounded-md font-semibold text-base-100"
+                  >
+                    Register
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </Container>

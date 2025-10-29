@@ -3,11 +3,10 @@ import React from 'react';
 const Card = () => {
   return (
     <div className="p-3 rounded-md bg-base-100 space-y-5">
-      <img
-        src=""
-        alt=""
-        className="bg-neutral-400 w-full rounded-md h-[276px]"
-      />
+      <img src="" alt="" className="bg-base-300 w-full rounded-md h-[246px]" />
+      <div className="bg-purple-100 px-3 py-1 rounded-full max-w-20">
+        <p className="gradient-text ">On Sale</p>
+      </div>
       <h3 className="font-semibold text-2xl">
         Yamaha Fz Guitar [ Full Fresh Condition ]{' '}
       </h3>

@@ -23,3 +23,32 @@ a.active,
   color: transparent;
   background-clip: text;
 }
+
+.menu a {
+  margin-bottom: 8px;
+}
+.menu a,
+.menu p {
+  color: #a1a1aa;
+  font-size: 1rem;
+  transition: 0.3s ease-in;
+}
+.menu a:hover,
+.menu p:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+label {
+  font-weight: 500;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0;
+  border: 1px solid #632ee3;
+}
+select {
+  outline: 0;
+}

@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import Container from '../Container/Container';
 import { Link, NavLink } from 'react-router';
-import avater from '../../assets/thumb-profile.png';
+import { AuthContext } from '../../context/AuthContext';
+import AccountMenu from '../AccountMenu/AccountMenu';
+import { MenuIcon, XIcon } from 'lucide-react';
 
 const Navbar = () => {
-  const [user, setUser] = useState(false);
-
+  const { user, loading } = use(AuthContext);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  if (loading) {
+    return (
+      <nav className="py-4 shadow">
+        <Container>
+          <div className="flex justify-between items-center">
+            <div className="animate-pulse w-32 h-6 bg-gray-200 rounded"></div>
+            <div className="animate-pulse w-48 h-6 bg-gray-200 rounded hidden lg:block"></div>
+            <div className="animate-pulse w-20 h-8 bg-gray-200 rounded"></div>
+          </div>
+        </Container>
+      </nav>
+    );
+  }
   const navLinks = [
     {
       name: 'Home',
@@ -45,9 +60,27 @@ const Navbar = () => {
               </NavLink>
             ))}
           </div>
-          <div>
+          {/* Mobile */}
+
+          {mobileMenu && (
+            <div
+              className={`absolute z-50  gap-7 lg:hidden ${
+                mobileMenu
+                  ? 'top-20 right-10 duration-300 transition-all'
+                  : '-top-100'
+              } duration-300 transition-all flex flex-col bg-base-200 px-20 py-10`}
+            >
+              {navLinks.map((link, index) => (
+                <NavLink to={link.path} className="font-semibold" key={index}>
+                  {link.name}
+                </NavLink>
+              ))}
+            </div>
+          )}
+
+          <div className="flex gap-3">
             {user ? (
-              <img src={avater} alt="Profile img" />
+              <AccountMenu />
             ) : (
               <div className="flex items-center">
                 <div>
@@ -68,6 +101,12 @@ const Navbar = () => {
                 </div>
               </div>
             )}
+            <div
+              className="lg:hidden"
+              onClick={() => setMobileMenu(!mobileMenu)}
+            >
+              {mobileMenu ? <XIcon /> : <MenuIcon />}
+            </div>
           </div>
         </div>
       </Container>

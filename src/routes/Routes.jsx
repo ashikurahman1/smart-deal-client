@@ -10,11 +10,16 @@ import Bid from '../pages/Bid';
 import AuthLayout from '../pages/AuthLayout';
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
+    element: (
+      <PrivateRoute>
+        <Root />
+      </PrivateRoute>
+    ),
     children: [
       { index: true, element: <HomePage /> },
       { path: '/', element: <HomePage /> },

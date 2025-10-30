@@ -1,10 +1,67 @@
 import { Eye, EyeOff, LucideEye } from 'lucide-react';
-import React, { useState } from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
+import { AuthContext } from '../../context/AuthContext';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const { createUser, updateUser, setUser, googleLogin, verifyEmail } =
+    use(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleRegister = e => {
+    e.preventDefault();
+
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const photoURL = e.target.photoURL.value;
+    const password = e.target.password.value;
+    // console.log({ name, photoURL, password });
+    createUser(email, password)
+      .then(result => {
+        const user = result.user;
+        updateUser({ displayName: name, photoURL: photoURL })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: photoURL });
+            verifyEmail()
+              .then(() => {
+                Swal.fire({
+                  title: 'Verification email sent! Please check your inbox.',
+                  icon: 'success',
+                  draggable: true,
+                });
+                navigate('/auth/login');
+              })
+              .catch(err => {
+                console.error('Verification error:', err.message);
+                toast.error('Failed to send verification email.');
+              });
+          })
+          .catch(err => {
+            console.error('Profile update error:', err.message);
+            toast.error('Failed to update profile.');
+          });
+      })
+      .catch(err => {
+        console.error('Registration error:', err.message);
+        toast.error(err.message);
+      });
+  };
+
+  const handleLoginWithGoogle = () => {
+    googleLogin()
+      .then(() => {
+        toast.success('Registration Success');
+        navigate(`${location.state ? location.state : '/'}`);
+      })
+      .catch(err => console.error(err.message));
+  };
+  // if (loading) return <p>Loading...</p>;
   return (
     <div className="py-8 lg:py-15 px-4">
       <div className="bg-base-100 p-4 lg:p-8 py-15 rounded-md shadow-md max-w-xl mx-auto">
@@ -21,11 +78,12 @@ const Register = () => {
             </p>
           </div>
 
-          <form className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4">
             <div>
               <label>Name</label>
               <input
-                type="email"
+                name="name"
+                type="text"
                 placeholder="Mariam Swarna"
                 className="input w-full mt-2"
               />
@@ -33,6 +91,7 @@ const Register = () => {
             <div>
               <label>Email</label>
               <input
+                name="email"
                 type="email"
                 placeholder="smsowkothasan@gmail.com"
                 className="input w-full mt-2"
@@ -41,14 +100,16 @@ const Register = () => {
             <div>
               <label>Image-URL</label>
               <input
+                name="photoURL"
                 type="url"
-                placeholder="smsowkothasan@gmail.com"
+                placeholder="https://img.thumbnail.jpg"
                 className="input w-full mt-2"
               />
             </div>
             <div className="relative">
               <label>Password</label>
               <input
+                name="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="*************"
                 className="input w-full mt-2"
@@ -68,7 +129,10 @@ const Register = () => {
           <div className="divider">OR</div>
 
           {/* Google */}
-          <button className="btn bg-white text-black border-[#e5e5e5] w-full">
+          <button
+            onClick={handleLoginWithGoogle}
+            className="btn bg-white text-black border-[#e5e5e5] w-full"
+          >
             <svg
               aria-label="Google logo"
               width="16"

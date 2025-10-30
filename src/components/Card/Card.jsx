@@ -1,9 +1,9 @@
 import React from 'react';
-
+import thumbnail from '../../assets/thumbnail-card.png';
 const Card = () => {
   return (
     <div className="p-3 rounded-md bg-base-100 space-y-5">
-      <img src="" alt="" className="bg-base-300 w-full rounded-md h-[246px]" />
+      <img src={thumbnail} alt="" className="w-full h-40" />
       <div className="bg-purple-100 px-3 py-1 rounded-full max-w-20">
         <p className="gradient-text ">On Sale</p>
       </div>
